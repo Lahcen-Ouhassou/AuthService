@@ -1,0 +1,24 @@
+{
+  "name": "authservice",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000A\u0000u\u0000t\u0000h\u0000S\u0000e\u0000r\u0000v\u0000i\u0000c\u0000e\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.19.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
