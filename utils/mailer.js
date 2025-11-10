@@ -10,7 +10,7 @@ export const sendEmail = async (to, subject, html) => {
   });
 
   await transporter.sendMail({
-    from: `"Auth Service" <${process.env.EMAIL_USER}>`,
+    from: process.env.EMAIL_USER,
     to,
     subject,
     html,
