@@ -112,3 +112,16 @@ export const resetPassword = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+export const me = async (req, res) => {
+  try {
+    const user = req.user;
+
+    res.json({
+      message: "Authorized user",
+      user,
+    });
+  } catch (err) {
+    console.error("Me error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
