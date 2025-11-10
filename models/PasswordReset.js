@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
-const passwordResetSchema = new mongoose.Schema({
-  email: { type: String, required: true },
-  code: { type: String, required: true },
-  expiresAt: { type: Date, required: true },
+const resetSchema = new mongoose.Schema({
+  email: String,
+  code: String,
+  expiresAt: Date,
 });
 
-export default mongoose.model("PasswordReset", passwordResetSchema);
+export default mongoose.model("PasswordReset", resetSchema);
