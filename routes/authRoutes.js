@@ -19,6 +19,6 @@ router.post("/forgot-password", requestPasswordReset);
 router.post("/verify-code", verifyResetCode);
 router.post("/reset-password", resetPassword);
 
-router.get("/me", authMiddleware, me); // ✅ هادي اللي كانت كتخرج error
+router.get("/profile", authMiddleware, me); 
 
 export default router;
