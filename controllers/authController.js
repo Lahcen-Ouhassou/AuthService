@@ -114,7 +114,15 @@ export const resetPassword = async (req, res) => {
 };
 export const me = async (req, res) => {
   try {
-    const user = req.user;
+    // req.user فيه غير id
+    const userId = req.user.id;
+
+    // نجيب اليوزر الحقيقي من MongoDB
+    const user = await User.findById(userId).select("-password");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
     res.json({
       message: "Authorized user",
