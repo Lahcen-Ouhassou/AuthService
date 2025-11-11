@@ -95,6 +95,7 @@ export const loginUser = async (req, res) => {
   }
 };
 
+// Request Password Reset
 export const requestPasswordReset = async (req, res) => {
   try {
     const { email } = req.body;
@@ -122,6 +123,7 @@ export const requestPasswordReset = async (req, res) => {
   }
 };
 
+// Verify Reset Code
 export const verifyResetCode = async (req, res) => {
   try {
     const { email, code } = req.body;
@@ -138,6 +140,7 @@ export const verifyResetCode = async (req, res) => {
   }
 };
 
+// Reset Password
 export const resetPassword = async (req, res) => {
   try {
     const { email, code, newPassword } = req.body;
@@ -159,6 +162,8 @@ export const resetPassword = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+// Me
 export const me = async (req, res) => {
   try {
     // req.user فيه غير id
