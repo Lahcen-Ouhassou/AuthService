@@ -8,7 +8,7 @@ import {
   me,
 } from "../controllers/authController.js";
 
-import authMiddleware from "../middlewares/authMiddleware.js"; // ✅ مهم جدا
+import authMiddleware from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
@@ -19,6 +19,6 @@ router.post("/forgot-password", requestPasswordReset);
 router.post("/verify-code", verifyResetCode);
 router.post("/reset-password", resetPassword);
 
-router.get("/profile", authMiddleware, me); 
+router.get("/profile", authMiddleware, me);
 
 export default router;
