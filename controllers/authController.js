@@ -48,6 +48,7 @@ export const registerUser = async (req, res) => {
   }
 };
 
+// Verify Email
 export const verifyEmail = async (req, res) => {
   try {
     const { token } = req.params;
