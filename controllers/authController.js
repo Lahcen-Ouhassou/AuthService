@@ -9,18 +9,65 @@ export const registerUser = async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
-    if (!username || !email || !password)
-      return res.status(400).json({ message: "All fields required" });
-
     const exists = await User.findOne({ email });
     if (exists) return res.status(400).json({ message: "Email already used" });
 
     const hashed = await bcrypt.hash(password, 10);
 
-    const user = await User.create({ username, email, password: hashed });
+    const verificationToken = crypto.randomBytes(32).toString("hex");
 
-    res.json({ message: "Registered", user });
+    const user = await User.create({
+      username,
+      email,
+      password: hashed,
+      verificationToken,
+      verificationExpires: Date.now() + 24 * 60 * 60 * 1000, // 24h
+    });
+
+    const verifyLink = `http://localhost:5000/auth/verify-email/${verificationToken}`;
+
+    await sendEmail(
+      email,
+      "Verify your email",
+      `
+      <h2>Welcome ${username}</h2>
+      <p>Please verify your email by clicking the button below:</p>
+      <a href="${verifyLink}" 
+         style="display:inline-block;padding:10px 20px;background:#4CAF50;color:white;text-decoration:none;border-radius:6px;">
+        Verify Email
+      </a>
+      `
+    );
+
+    res.json({
+      message:
+        "Registered successfully. Check your email to verify your account.",
+    });
   } catch (e) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const verifyEmail = async (req, res) => {
+  try {
+    const { token } = req.params;
+
+    const user = await User.findOne({
+      verificationToken: token,
+      verificationExpires: { $gt: Date.now() },
+    });
+
+    if (!user)
+      return res.status(400).send("Invalid or expired verification token");
+
+    user.isVerified = true;
+    user.verificationToken = undefined;
+    user.verificationExpires = undefined;
+
+    await user.save();
+
+    res.send("<h2>Your email has been verified. You can now login.</h2>");
+  } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
 };
