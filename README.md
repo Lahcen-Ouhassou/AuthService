@@ -38,6 +38,9 @@ PORT=5000
 
 EMAIL_USER=youremail@gmail.com
 EMAIL_PASS=your_app_password
+
+---
+
 # 1️⃣ Install dependencies
 npm install
 
@@ -46,6 +49,8 @@ npm install
 # 3️⃣ Run the server
 npm start
 
+
+---
 
 📧 Email Verification Flow
 
@@ -66,5 +71,6 @@ JWT tokens stored safely in headers
 Email verification ensures valid accounts only
 
 Secure token expiry system for both JWT & verification
+
 
 
