@@ -1,4 +1,4 @@
-# 🔐 AuthService – Modern Authentication API (Node.js + MongoDB)
+# AuthService – Modern Authentication API 
 
 A complete **authentication and authorization system** built using **Node.js**, **Express**, and **MongoDB**.  
 Includes **user registration**, **login**, **email verification**, **password reset via email**, and **JWT-based authentication** — all secured and production-ready.
@@ -72,5 +72,10 @@ Email verification ensures valid accounts only
 
 Secure token expiry system for both JWT & verification
 
+
+
+## Author
+
+Developed by **[Lahcen Ouhassou](https://github.com/Lahcen-Ouhassou)**  
 
 
