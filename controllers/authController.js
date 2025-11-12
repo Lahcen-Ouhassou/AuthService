@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import User from "../models/User.js";
 import PasswordReset from "../models/PasswordReset.js";
 import bcrypt from "bcrypt";
@@ -52,23 +53,37 @@ export const registerUser = async (req, res) => {
 export const verifyEmail = async (req, res) => {
   try {
     const { token } = req.params;
+    console.log("📩 Verification token received:", token);
 
     const user = await User.findOne({
       verificationToken: token,
       verificationExpires: { $gt: Date.now() },
     });
 
-    if (!user)
-      return res.status(400).send("Invalid or expired verification token");
+    if (!user) {
+      console.log("❌ No user found or token expired");
+      return res
+        .status(400)
+        .send("<h2>Invalid or expired verification link.</h2>");
+    }
 
+    // ✅ Update the user
     user.isVerified = true;
     user.verificationToken = undefined;
     user.verificationExpires = undefined;
-
     await user.save();
 
-    res.send("<h2>Your email has been verified. You can now login.</h2>");
+    console.log("✅ Email verified for:", user.email);
+
+    // Response with simple success page
+    res.send(`
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;background:#f4f4f4;">
+        <h2 style="color:green;">✅ Email verified successfully!</h2>
+        <p>You can now log in to your account.</p>
+      </div>
+    `);
   } catch (err) {
+    console.error("Verify email error:", err);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -82,6 +97,13 @@ export const loginUser = async (req, res) => {
     if (!user)
       return res.status(400).json({ message: "Invalid email or password" });
 
+    // 👇 Add this check
+    if (!user.isVerified) {
+      return res
+        .status(403)
+        .json({ message: "Please verify your email first" });
+    }
+
     const match = await bcrypt.compare(password, user.password);
     if (!match)
       return res.status(400).json({ message: "Invalid email or password" });
@@ -92,6 +114,7 @@ export const loginUser = async (req, res) => {
 
     res.json({ message: "Logged in", token, user });
   } catch (e) {
+    console.error("Login error:", e);
     res.status(500).json({ message: "Server error" });
   }
 };
