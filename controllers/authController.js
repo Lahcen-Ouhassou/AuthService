@@ -67,7 +67,7 @@ export const verifyEmail = async (req, res) => {
         .send("<h2>Invalid or expired verification link.</h2>");
     }
 
-    // ✅ Update the user
+    // Update the user
     user.isVerified = true;
     user.verificationToken = undefined;
     user.verificationExpires = undefined;
@@ -78,7 +78,7 @@ export const verifyEmail = async (req, res) => {
     // Response with simple success page
     res.send(`
       <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;background:#f4f4f4;">
-        <h2 style="color:green;">✅ Email verified successfully!</h2>
+        <h2 style="color:green;">✅ Email verified Successfully!</h2>
         <p>You can now log in to your account.</p>
       </div>
     `);
@@ -132,7 +132,7 @@ export const requestPasswordReset = async (req, res) => {
     await PasswordReset.create({
       email,
       code,
-      expiresAt: Date.now() + 10 * 60 * 1000,
+      expiresAt: Date.now() + 10 * 60 * 1000, // 10min
     });
 
     await sendEmail(
