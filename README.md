@@ -74,8 +74,6 @@ Secure token expiry system for both JWT & verification
 
 
 
-## Author
+
 
 Developed by **[Lahcen Ouhassou](https://github.com/Lahcen-Ouhassou)**  
-
-
