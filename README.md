@@ -73,7 +73,9 @@ Email verification ensures valid accounts only
 Secure token expiry system for both JWT & verification
 
 
+```
 
 
 
 Developed by **[Lahcen Ouhassou](https://github.com/Lahcen-Ouhassou)**  
+
